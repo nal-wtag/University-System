@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+
+
+<div class="container">
+  <%= form_with url: "/students", method: :get do |form| %>
+    <%= form.label :query, "Search for:" %>
+    <%= form.text_field :query %>
+    <%= form.submit "Search" %>
+  <% end %>
+
+  <h3>LIST OF STUDENTS</h3>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Address</th>
+      <th scope="col">Department</th>
+      <th scope="col">Show Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @students.each do |student| %>
+    <tr>
+
+      <td><%=student.name %></td>
+      <td><%=student.email %></td>
+      <td><%=student.address %></td>
+      <%if student.student_department.present? %>
+        <td><%= student.student_department.name %></td>
+      <%else %>
+        <td></td>
+      <%end %>
+      <td>
+        <%=link_to 'Show Profile',student_path(student),class: 'btn btn-primary' %>
+        <%if current_user.role=="teacher" && current_user.department_head_department_id!=nil %>
+        <%=link_to 'Assign Department',assign_department_path(student), class: 'btn btn-success'%>
+          <%end %>
+      </td>
+    </tr>
+
+
+    <% end %>
+    </tbody>
+  </table>
+  <br>
+
+</div>
+
+</body>
+</html>

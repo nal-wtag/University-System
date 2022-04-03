@@ -1,0 +1,14 @@
+
+<%= bootstrap_form_for(@user) do |f| %>
+  <%= f.email_field :email %>
+  <%= f.password_field :password %>
+  <%= f.text_field :name%>
+  <%= f.text_field :address%>
+  <%=f.select :role, User.roles.keys.map { |w| [w.humanize, w]} %><br>
+  <%= f.submit "Submit" %>
+<% end %>
+
+
+
+
+

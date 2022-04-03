@@ -1,0 +1,24 @@
+
+<div class="container">
+
+  <%= form_for @user, url: {action: :update} do |f| %>
+
+    <h3>Assign as Head </h3>
+    <%= "<div>#{@user.errors.full_messages.first}</div>".html_safe if @user.errors.any? %>
+    <p>
+
+    <div>
+      <label>Department Name</label>
+      <%= f.collection_select :department_head_department_id, Department.order(:name), :id, :name %>
+    </div>
+
+
+
+
+    </p>
+    <div>
+      <%= link_to 'Back', { controller: 'teachers', action: 'index'} %>
+      <%= f.submit 'Assign Department' %>
+    </div>
+  <% end %>
+</div>

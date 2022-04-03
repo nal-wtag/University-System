@@ -1,0 +1,42 @@
+
+<h1>Edit Courses</h1>
+
+<%= form_with model: @course do |form| %>
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+    <% @course.errors.full_messages_for(:title).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :credit %><br>
+    <%= form.text_field :credit %><br>
+    <% @course.errors.full_messages_for(:credit).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.label :code %><br>
+    <%= form.text_field :code %><br>
+    <% @course.errors.full_messages_for(:code).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.label :semester %><br>
+    <%= form.text_field :semester %><br>
+    <% @course.errors.full_messages_for(:semester).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.collection_select :department_id, Department.order(:name), :id, :name %>
+  </div>
+  <div>
+    <%= form.submit %>
+  </div>
+  <%= link_to 'Back', { controller: 'courses', action: 'index'} %>
+<% end %>
+

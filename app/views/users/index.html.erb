@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<div class="container">
+  <% if signed_in? %>
+  <h1>Welcome <%= current_user.name %></h1>
+    <h1>You are a <%= current_user.role %></h1>
+  <% end %>
+  <%= link_to "Add users", users_new_path %>
+  <h3>USER LIST</h3>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Address</th>
+      <th scope="col">Role</th>
+      <th scope="col">Actions</th>
+      <th scope="col">Special Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.address %></td>
+
+      <td><%= user.role %></td>
+
+      <td><%= link_to "Show Profile", user,class: 'btn btn-primary' %>
+      <%= link_to "Destroy", user_path(user),class: 'btn btn-danger', data: {
+        turbo_method: :delete,
+        turbo_confirm: "Are you sure?"
+      } %>
+
+        <%if user.role=="teacher" %>
+          <% if user.department_head_department_id==nil %>
+          <td><%= link_to "Assign Head",  department_head_user_path(user),class: 'btn btn-success'%></td>
+        <%else %>
+          <td><%= link_to "UnAssign Head",   unassign_head_path(user),class: 'btn btn-danger'%></td>
+        <% end %>
+        <%else %>
+        <td></td>
+      <% end %>
+
+      </td>
+
+    </tr>
+
+    <% end %>
+    </tbody>
+  </table>
+
+
+
+
+
+
+  <br>
+
+
+</div>
+</body>
+</html>

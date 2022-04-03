@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<div class="container">
+<h1>Details for <%=@student.name %></h1>
+
+
+  <ul style="list-style: none">
+
+    <li>
+      <% @message = "Name:    " %>
+      <%= @message + @student.name %>
+    </li>
+    <li>
+      <% @message = "Email:    " %>
+      <%= @message + @student.email %>
+    </li>
+    <li>
+      <% @message = "Address:    " %>
+      <%= @message + @student.address %>
+    </li>
+
+  </ul>
+
+
+
+
+
+
+
+
+
+<h2>You have completed <%=@credit %> credits!</h2>
+<h1>List of Courses Enrolled</h1>
+<br>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Credit</th>
+      <th scope="col">Code</th>
+      <th scope="col">Semester</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <% @student.student_courses.each do |course| %>
+    <tr>
+      <td><%= course.title %></td>
+      <td><%= course.credit %></td>
+      <td><%= course.code %></td>
+      <td><%= course.semester %></td>
+    </tr>
+
+    <% end %>
+    </tbody>
+  </table>
+
+<% if can? :update, StudentsController %>
+<%= link_to 'Edit Profile', edit_user_path(@student),class: 'btn btn-success' %>
+<% end %>
+
+</div>

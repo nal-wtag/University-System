@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+<div class="container">
+  <h3>DEPARTMENT LIST</h3>
+
+  <div>
+   <% if can? :create, Department %>
+    <%= link_to 'Add Department', new_department_path %>
+    <% end %>
+
+  </div>
+
+
+
+
+  <table class="table">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Location</th>
+      <th scope="col">Actions</th>
+
+    </tr>
+    </thead>
+    <% @departments.each do |dept| %>
+    <tbody>
+    <tr>
+      <th scope="row"><%= dept.name %></th>
+      <td><%= dept.location %></td>
+      <div>
+        <td>
+          <% if can? :read, dept %>
+            <%= link_to 'Show', dept,class: 'btn btn-primary' %>
+          <% end %>
+          <% if can? :update, dept %>
+            <%= link_to 'Edit', edit_department_path(dept),class: 'btn btn-secondary' %>
+          <% end %>
+
+          <% if can? :delete, dept %>
+            <%= link_to "Destroy", department_path(dept),class: 'btn btn-danger', data: {
+              turbo_method: :delete,
+              turbo_confirm: "Are you sure?"
+            } %>
+
+          <% end %>
+
+        </td>
+      </div>
+
+    </tr>
+
+
+    </tbody>
+    <% end %>
+  </table>
+
+
+  <br>
+
+</div>
+</body>
+</html>

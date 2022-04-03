@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+<div class="container">
+  <%= form_with url: "/teachers", method: :get do |form| %>
+    <%= form.label :query, "Search for:" %>
+    <%= form.text_field :query %>
+    <%= form.submit "Search" %>
+  <% end %>
+  <h3>LIST OF TEACHERS</h3>
+  <table class="table">
+
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Address</th>
+      <th scope="col">Department</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <% @teachers.each do |teacher| %>
+    <tbody>
+    <tr>
+      <th scope="row"><%=teacher.name%></th>
+      <td><%= teacher.email%></td>
+      <td><%= teacher.address %></td>
+      <%if teacher.teacher_department.present? %>
+        <td><%= teacher.teacher_department.name %></td>
+      <%else %>
+        <td></td>
+      <%end %>
+      <td>
+        <% if can? :update, TeachersController %>
+          <%= link_to 'Assign Department', edit_teacher_path(teacher),class: 'btn btn-secondary' %>
+        <% end %>
+
+
+
+      </td>
+
+    </tr>
+
+
+    </tbody>
+    <% end %>
+  </table>
+
+
+
+  <br>
+</div>
+
+</body>
+</html>

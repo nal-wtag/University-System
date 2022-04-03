@@ -1,0 +1,27 @@
+<%= form_for :session, url: session_path do |form| %>
+  <div class="card">
+    <div class="card-body">
+      <h2>Sign in</h2>
+      <div class="mb-3">
+        <%= form.label :email, { class: "form-label"} %>
+        <%= form.text_field :email, { class: "form-control", placeholder: "Your email" } %>
+      </div>
+
+      <div class="mb-3">
+        <div class="password-field">
+          <%= form.label :password, { class: "form-label"} %>
+          <%= form.text_field :password, { class: "form-control", placeholder: "Your Password" } %>
+        </div>
+
+      </div>
+
+
+      <%= form.submit "Submit", class: "btn btn-primary" %>
+      <div>
+        <%= link_to t(".forgot_password"), new_password_path %>
+      </div>
+
+
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,57 @@
+
+<div class="container">
+  <h3>Department Details</h3>
+
+  <div>
+    <label>Department Name</label>
+    <%= @department.name %>
+  </div>
+
+  <div>
+    <label>Location</label>
+    <%= @department.location %>
+  </div>
+  <div>
+    <label>Department Head</label>
+    <% if @department.head.present? %>
+      <td><%= @department.head.name %></td>
+    <%else %>
+      <td><%=    %></td>
+    <%end %>
+  </div>
+
+
+
+  <div>
+    <h1>Courses</h1>
+    <br>
+    <table border="2">
+
+      <tr>
+        <th>Title</th>
+        <th>Credit</th>
+        <th>Code</th>
+        <th>Semester</th>
+        <th>Actions</th>
+
+      </tr>
+
+
+      <% @department.courses.each do |course| %>
+        <tr>
+          <td><%= course.title %></td>
+          <td><%= course.credit %></td>
+          <td><%= course.code %></td>
+          <td><%= course.semester %></td>
+        </tr>
+      <% end %>
+
+    </table>
+
+  </div>
+
+
+  <div>
+    <%= link_to 'Back', { controller: 'departments', action: 'index'} %>
+  </div>
+</div>

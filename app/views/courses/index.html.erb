@@ -1,0 +1,68 @@
+
+
+
+<!DOCTYPE html>
+<html>
+<body>
+<div class="container">
+
+    <%= form_with url: "/courses", method: :get do |form| %>
+      <%= form.label :query, "Search for:" %>
+      <%= form.text_field :query %>
+      <%= form.submit "Search" %>
+    <% end %>
+  <h1> List of Courses</h1>
+
+  <div>
+    <% if can? :create, Course %>
+      <%= link_to 'Add Courses', new_course_path %>
+    <% end %>
+
+  </div>
+  <br>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Credit</th>
+      <th scope="col">Code</th>
+      <th scope="col">Semester</th>
+      <th scope="col">Department</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <% @courses.each do |course| %>
+    <tbody>
+    <tr>
+      <th scope="row"><%= course.title %></th>
+      <td><%= course.credit %></td>
+      <td><%= course.code %></td>
+      <td><%= course.semester %></td>
+      <%if course.department.present? %>
+      <td><%= course.department.name %></td>
+        <%else %>
+        <td></td>
+        <%end %>
+      <div>
+        <td>
+          <%= link_to 'Show' , course,class: 'btn btn-primary' %>
+          <% if can? :delete, course %>
+            <%= link_to "Destroy", course_path(course),class: "btn btn-danger", data: {
+              turbo_method: :delete,
+              turbo_confirm: "Are you sure?"
+            } %>
+          <% end %>
+
+
+
+        </td>
+      </div>
+    </tr>
+
+    </tbody>
+    <% end %>
+  </table>
+
+</div>
+</body>
+</html>

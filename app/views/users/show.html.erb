@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+
+<div class="container">
+<div class="mx-auto" style="width: 50%;">
+  <h1>Details for <%=@user.name %></h1>
+  <h3>You have <%=@hours %> hours of classes assigned</h3>
+  <%= "<div>#{@user.errors.full_messages.first}</div>".html_safe if @user.errors.any? %>
+<table class="table table-dark">
+  <thead>
+  <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Email</th>
+    <th scope="col">Address</th>
+    <th scope="col">Role</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+
+    <td><%=@user.name %></td>
+    <td><%= @user.email %></td>
+    <td><%= @user.address %></td>
+    <td><%= @user.role %></td>
+  </tr>
+
+  </tbody>
+</table>
+</div>
+
+
+<% if @user.role=="student" %>
+  <h1>List of Courses Enrolled</h1>
+
+
+  <table class="table">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Credit</th>
+      <th scope="col">Code</th>
+      <th scope="col">Semester</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @user.student_courses.each do |course| %>
+    <tr>
+      <td><%= course.title %></td>
+      <td><%= course.credit %></td>
+      <td><%= course.code %></td>
+      <td><%= course.semester %></td>
+    </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <br>
+<%elsif @user.role=="teacher" %>
+  <h1>List of Courses Assigned</h1>
+
+  <table class="table">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Credit</th>
+      <th scope="col">Code</th>
+      <th scope="col">Semester</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <% @user.courses.each do |course| %>
+    <tbody>
+    <tr>
+
+      <td><%=course.title %></td>
+      <td><%=course.credit %></td>
+      <td><%=course.code %></td>
+      <% if course.semester.present? %>
+        <td><%= course.semester %></td>
+      <%else %>
+        <td><%=    %></td>
+      <%end %>
+      <td><%= link_to 'Go to course',course ,class: 'btn btn-success'%></td>
+    </tr>
+
+    </tbody>
+    <% end %>
+  </table>
+
+  <% end %>
+
+
+
+
+<%= link_to 'Edit Profile', edit_user_path(@user) ,class: 'btn btn-primary'%>
+
+</div>

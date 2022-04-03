@@ -1,0 +1,27 @@
+div class="container">
+
+<%= form_for @tc, url: {action: :create} do |f| %>
+
+  <h3>Enroll in Courses!!</h3>
+
+  <p>
+
+  <div>
+    <label>Student Name</label>
+    <%= f.collection_select :student_id, User.order(:name), :id, :name %>
+  </div>
+  <%=  %>
+  <div>
+    <label>Course Name</label>
+    <%= f.collection_select :course_id, Course.order(:title), :id, :title %>
+  </div>
+
+
+
+  </p>
+  <div>
+    <%= link_to 'Back', { controller: 'students', action: 'index'} %>
+    <%= f.submit 'Enroll now' %>
+  </div>
+<% end %>
+</div>

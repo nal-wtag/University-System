@@ -1,0 +1,84 @@
+<div class="container">
+<h1>Course Details</h1>
+
+
+
+
+
+
+<table caption="Course Detail View">
+
+  <table class="table table-dark">
+    <thead>
+    <tr>
+      <th scope="col">Credit</th>
+      <th scope="col">Code</th>
+      <th scope="col">Title</th>
+      <th scope="col">Semester</th>
+      <th scope="col">Department</th>
+      <th scope="col">Teacher</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr>
+     <td><%= @course.credit %></td>
+      <td><%= @course.code %></td>
+      <td><%= @course.title %></td>
+      <td><%= @course.semester %></td>
+      <% a=Department.find(@course.department_id) %>
+      <td><%= a.name %></td>
+      <% if @course.teacher.present? %>
+        <td><%= @course.teacher.name %></td>
+      <%else %>
+        <td><%=    %></td>
+      <%end %>
+      <% if current_user.role== "student" %>
+        <%= link_to 'Enroll in Course', { controller: 'add_teachers', action: 'edit'} ,class: 'btn btn-warning' %>
+      <% elsif current_user.role== "admin" || current_user.department_head_department_id==@course.department_id %>
+        <%= link_to 'Assign Teacher', { controller: 'add_teachers', action: 'edit'},class: 'btn btn-info'%>
+      <% end %>
+    </tr>
+    </tbody>
+  </table>
+
+  <% if   current_user.department_head_department_id ==@course.department_id%>
+    <%= link_to 'Edit', edit_course_path(@course),class: 'btn btn-success' %>
+  <% end %>
+
+
+</table>
+
+ <h1>Students Enrolled</h1>
+<table class="table">
+  <thead class="thead-dark">
+  <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Email</th>
+    <th scope="col">Department</th>
+    <th scope="col">Actions</th>
+
+  </tr>
+  </thead>
+  <%@course.students.each do |student| %>
+    <tbody>
+
+    <tr>
+
+      <td><%=student.name%></td>
+      <td><%=student.email %></td>
+      <%if student.student_department.present? %>
+        <td><%= student.student_department.name %></td>
+      <%else %>
+        <td></td>
+      <%end %>
+      <% if (current_user.department_head_department_id!=nil and current_user.department_head_department_id==student.student_department_id) %>
+<td><%= link_to 'Unenroll', unenroll_path(@course,student),class: 'btn btn-danger'%></td>
+      <% end %>
+    </tr>
+
+    </tbody>
+  <%end %>
+</table>
+<%= link_to 'Back', { controller: 'courses', action: 'index'},class: 'btn btn-dark' %>
+</div>

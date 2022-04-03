@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <div class="navbar-brand" >University Management System</div>
+
+    <% if current_user.department_head_department_id.present? %>
+
+      <div class="navbar-brand" >Head </div>
+      <%else %>
+      <div class="navbar-brand" ><%=current_user.role %></div>
+      <%end %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" <%= link_to 'Home', current_user %></a>
+        </li>
+
+        <li class="nav-item">
+
+          <a class="nav-link"  <%= link_to 'Courses', courses_path %></a>
+        </li>
+        <%if current_user.role=="admin" %>
+          <li class="nav-item">
+
+            <a class="nav-link"  <%= link_to 'All users', users_path %></a>
+          </li>
+          <%end %>
+        <li class="nav-item">
+          <a class="nav-link" <%= link_to 'Departments', departments_path %></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"<%= link_to 'Teachers', teachers_path %></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  <%= link_to 'Students', students_path %> </a>
+        </li>
+        <% if signed_in? %>
+          <%= button_to 'Sign out', sign_out_path, method: :delete %>
+        <% else %>
+          <a class="nav-link" <%= link_to 'Sign in', sign_in_path %></a>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+</nav>

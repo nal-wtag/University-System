@@ -1,0 +1,28 @@
+<div class="container">
+
+  <%= form_for @student, url: {action: :update} do |f| %>
+
+    <h3>Enroll in Courses!!</h3>
+    <h3><%= @student.name %></h3>
+    <%= "<div>#{@student.errors.full_messages.first}</div>".html_safe if @student.errors.any? %>
+    <p>
+
+    <div>
+      <label>Department Name</label>
+      <%= f.collection_select :student_department_id, Department.order(:name), :id, :name %>
+    </div>
+
+
+    <div>
+      <%= f.collection_select :student_courses_ids, Course.order(:title), :id, :title %>
+
+    </div>
+
+
+    </p>
+    <div>
+      <%= link_to 'Back', { controller: 'students', action: 'index'} %>
+      <%= f.submit 'Enroll now' %>
+    </div>
+  <% end %>
+</div>
